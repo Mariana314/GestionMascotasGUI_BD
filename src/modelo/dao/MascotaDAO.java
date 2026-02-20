@@ -18,7 +18,7 @@ public class MascotaDAO {
         if (!resultado.equals("conectado")) {
             return "Error en la conexión: " + resultado;
         }
-
+        	
         String sql = "INSERT INTO mascotas (nombre, especie, raza, edad) VALUES (?, ?, ?, ?)";
         try (Connection conn = conexion.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -63,4 +63,98 @@ public class MascotaDAO {
         }
         return lista;
     }
+    
+    public String eliminarMascota(int id) {
+        String resultado = conexion.conectar();
+        if (!resultado.equals("conectado")) {
+            return "Error en la conexión: " + resultado;
+        }
+
+        String sql = "DELETE FROM mascotas WHERE id = ?";
+
+        try (Connection conn = conexion.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setInt(1, id);
+            int filas = ps.executeUpdate();
+
+            if (filas > 0) {
+                return "Mascota eliminada correctamente";
+            } else {
+                return "No se encontró la mascota";
+            }
+
+        } catch (SQLException e) {
+            return "Error al eliminar: " + e.getMessage();
+        } finally {
+            conexion.desconectar();
+        }
+    }
+    
+    public String actualizarMascota(MascotaVO mascota) {
+        String resultado = conexion.conectar();
+        if (!resultado.equals("conectado")) {
+            return "Error en la conexión: " + resultado;
+        }
+
+        String sql = "UPDATE mascotas SET nombre=?, especie=?, raza=?, edad=? WHERE id=?";
+
+        try (Connection conn = conexion.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setString(1, mascota.getNombre());
+            ps.setString(2, mascota.getEspecie());
+            ps.setString(3, mascota.getRaza());
+            ps.setInt(4, mascota.getEdad());
+            ps.setInt(5, mascota.getId());
+
+            int filas = ps.executeUpdate();
+
+            if (filas > 0) {
+                return "Mascota actualizada correctamente";
+            } else {
+                return "No se encontró la mascota";
+            }
+
+        } catch (SQLException e) {
+            return "Error al actualizar: " + e.getMessage();
+        } finally {
+            conexion.desconectar();
+        }
+    }
+    
+    public MascotaVO buscarPorNombre(String nombre) {
+        MascotaVO mascota = null;
+        String resultado = conexion.conectar();
+        if (!resultado.equals("conectado")) {
+            return null;
+        }
+
+        String sql = "SELECT * FROM mascotas WHERE nombre = ? LIMIT 1";
+
+        try (Connection conn = conexion.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setString(1, nombre);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                mascota = new MascotaVO();
+                mascota.setId(rs.getInt("id"));
+                mascota.setNombre(rs.getString("nombre"));
+                mascota.setEspecie(rs.getString("especie"));
+                mascota.setRaza(rs.getString("raza"));
+                mascota.setEdad(rs.getInt("edad"));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            conexion.desconectar();
+        }
+
+        return mascota;
+    }
+    
+    
 }

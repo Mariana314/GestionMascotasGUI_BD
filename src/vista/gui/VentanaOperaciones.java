@@ -13,19 +13,22 @@ public class VentanaOperaciones extends JFrame implements ActionListener {
     private Coordinador coordinador;
 
     // Componentes
-    private JLabel labelTitulo, labelNombre, labelEspecie, labelRaza, labelEdad;
-    private JTextField txtNombre, txtEspecie, txtRaza, txtEdad;
-    private JButton btnRegistrar, btnConsultar, btnCancelar;
+    private JLabel labelTitulo, labelNombre, labelEspecie, labelRaza, labelEdad, labelId;
+    private JTextField txtNombre, txtEspecie, txtRaza, txtEdad, txtId;
+    private JButton btnRegistrar, btnConsultar, btnCancelar, btnActualizar, btnEliminar;
     private JPanel panel;
+    
+ 
 
     public VentanaOperaciones() {
         // Configuración principal de la ventana
         setTitle("Gestión de Mascotas");
-        setSize(700, 400);
+        setSize(680, 480);
         setResizable(false);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
+        
         // Inicializar componentes
         initComponents();
     }
@@ -33,14 +36,14 @@ public class VentanaOperaciones extends JFrame implements ActionListener {
     private void initComponents() {
         panel = new JPanel();
         panel.setLayout(null);
-        panel.setBackground(new Color(245, 247, 255)); // Fondo suave en azul claro
+        panel.setBackground(new Color(236, 240, 241)); // Fondo suave en azul claro
 
         // Título
         labelTitulo = new JLabel("Gestión de Mascotas", SwingConstants.CENTER);
         labelTitulo.setFont(new Font("Verdana", Font.BOLD, 22));
         labelTitulo.setForeground(new Color(33, 80, 162)); // Azul oscuro
-        labelTitulo.setBounds(200, 20, 300, 30);
-
+        labelTitulo.setBounds(180, 20, 350, 30);
+        
         // Etiquetas y campos de texto
         Font labelFont = new Font("Arial", Font.BOLD, 16);
         Font textFieldFont = new Font("Arial", Font.PLAIN, 14);
@@ -85,36 +88,58 @@ public class VentanaOperaciones extends JFrame implements ActionListener {
         txtEdad.setBounds(180, 230, 250, 30);
         txtEdad.setBorder(BorderFactory.createLineBorder(new Color(173, 216, 230))); // Azul claro
 
-        // Botones
+     // Botones
         Font btnFont = new Font("Verdana", Font.BOLD, 14);
+        Color azulPrincipal = new Color(52, 152, 219);
+        Color rojoElegante = new Color(231, 76, 60);
+        Color grisSuave = new Color(189, 195, 199);
 
         btnRegistrar = new JButton("Registrar");
         btnRegistrar.setFont(btnFont);
-        btnRegistrar.setBounds(470, 80, 150, 40);
-        btnRegistrar.setBackground(new Color(34, 139, 34)); // Verde
+        btnRegistrar.setBounds(450, 80, 180, 42); 
+        btnRegistrar.setBackground(azulPrincipal);
         btnRegistrar.setForeground(Color.WHITE);
-        btnRegistrar.setBorder(BorderFactory.createLineBorder(new Color(0, 100, 0), 2));
+        btnRegistrar.setBorder(null);
         btnRegistrar.setFocusPainted(false);
         btnRegistrar.addActionListener(this);
 
+        btnActualizar = new JButton("Actualizar");
+        btnActualizar.setFont(btnFont);
+        btnActualizar.setBounds(450, 145, 180, 42);
+        btnActualizar.setBackground(azulPrincipal);
+        btnActualizar.setForeground(Color.WHITE);
+        btnActualizar.setBorder(null);
+        btnActualizar.setFocusPainted(false);
+        btnActualizar.addActionListener(this);
+
         btnConsultar = new JButton("Consultar");
         btnConsultar.setFont(btnFont);
-        btnConsultar.setBounds(470, 140, 150, 40);
-        btnConsultar.setBackground(new Color(30, 144, 255)); // Azul
+        btnConsultar.setBounds(450, 200, 180, 42);
+        btnConsultar.setBackground(azulPrincipal);
         btnConsultar.setForeground(Color.WHITE);
-        btnConsultar.setBorder(BorderFactory.createLineBorder(new Color(0, 0, 205), 2));
+        btnConsultar.setBorder(null);
         btnConsultar.setFocusPainted(false);
         btnConsultar.addActionListener(this);
 
+        btnEliminar = new JButton("Eliminar");
+        btnEliminar.setFont(btnFont);
+        btnEliminar.setBounds(450, 255, 180, 42);
+        btnEliminar.setBackground(rojoElegante);
+        btnEliminar.setForeground(Color.WHITE);
+        btnEliminar.setBorder(null);
+        btnEliminar.setFocusPainted(false);
+        btnEliminar.addActionListener(this);
+
         btnCancelar = new JButton("Cancelar");
         btnCancelar.setFont(btnFont);
-        btnCancelar.setBounds(470, 200, 150, 40);
-        btnCancelar.setBackground(new Color(220, 20, 60)); // Rojo
+        btnCancelar.setBounds(450, 310, 180, 42);
+        btnCancelar.setBackground(grisSuave);
         btnCancelar.setForeground(Color.WHITE);
-        btnCancelar.setBorder(BorderFactory.createLineBorder(new Color(139, 0, 0), 2));
+        btnCancelar.setBorder(null);
         btnCancelar.setFocusPainted(false);
         btnCancelar.addActionListener(this);
-
+        
+        
         // Agregar componentes al panel
         panel.add(labelTitulo);
         panel.add(labelNombre);
@@ -127,7 +152,11 @@ public class VentanaOperaciones extends JFrame implements ActionListener {
         panel.add(txtEdad);
         panel.add(btnRegistrar);
         panel.add(btnConsultar);
+        panel.add(btnActualizar);
+        panel.add(btnEliminar);
         panel.add(btnCancelar);
+      
+        
 
         // Agregar panel al JFrame
         add(panel);
@@ -135,13 +164,17 @@ public class VentanaOperaciones extends JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == btnRegistrar) {
-            registrarMascota();
-        } else if (e.getSource() == btnConsultar) {
-            coordinador.mostrarVentanaConsulta();
-        } else if (e.getSource() == btnCancelar) {
-            limpiarCampos();
-        }
+    	   if (e.getSource() == btnRegistrar) {
+    	        registrarMascota();
+    	    } else if (e.getSource() == btnConsultar) {
+    	        coordinador.mostrarVentanaConsulta();
+    	    } else if (e.getSource() == btnCancelar) {
+    	        limpiarCampos();
+    	    } else if (e.getSource() == btnActualizar) {
+    	        actualizarMascota();
+    	    } else if (e.getSource() == btnEliminar) {
+    	        eliminarMascota();
+    	    }
     }
 
     private void registrarMascota() {
@@ -149,6 +182,13 @@ public class VentanaOperaciones extends JFrame implements ActionListener {
             String nombre = txtNombre.getText();
             String especie = txtEspecie.getText();
             String raza = txtRaza.getText();
+            String edadTexto = txtEdad.getText().trim();
+            
+            if (nombre.isEmpty() || especie.isEmpty() || raza.isEmpty() || edadTexto.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Todos los campos son obligatorios.");
+                return;
+            }
+
             int edad = Integer.parseInt(txtEdad.getText());
 
             MascotaVO mascota = new MascotaVO();
@@ -174,5 +214,66 @@ public class VentanaOperaciones extends JFrame implements ActionListener {
 
     public void setCoordinador(Coordinador coordinador) {
         this.coordinador = coordinador;
+        
+        
+    }
+    private void eliminarMascota() {
+
+        String nombre = txtNombre.getText().trim();
+
+        // Validar campo vacío
+        if (nombre.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Debe ingresar el nombre de la mascota.");
+            return;
+        }
+
+        MascotaVO mascota = coordinador.buscarPorNombre(nombre);
+
+        if (mascota != null) {
+
+            // Confirmación antes de eliminar
+            int opcion = JOptionPane.showConfirmDialog(
+                    this,
+                    "¿Está seguro de eliminar la mascota \"" + nombre + "\"?",
+                    "Confirmar eliminación",
+                    JOptionPane.YES_NO_OPTION,
+                    JOptionPane.WARNING_MESSAGE
+            );
+
+            if (opcion == JOptionPane.YES_OPTION) {
+
+                String mensaje = coordinador.eliminarMascota(mascota.getId());
+                JOptionPane.showMessageDialog(this, mensaje);
+                limpiarCampos();
+            }
+
+        } else {
+            JOptionPane.showMessageDialog(this, "Mascota no encontrada.");
+        }
+    }
+    private void actualizarMascota() {
+        try {
+            String nombreBusqueda = txtNombre.getText();
+
+            MascotaVO mascotaExistente = coordinador.buscarPorNombre(nombreBusqueda);
+
+            if (mascotaExistente != null) {
+
+                mascotaExistente.setNombre(txtNombre.getText());
+                mascotaExistente.setEspecie(txtEspecie.getText());
+                mascotaExistente.setRaza(txtRaza.getText());
+                mascotaExistente.setEdad(Integer.parseInt(txtEdad.getText()));
+
+                String mensaje = coordinador.actualizarMascota(mascotaExistente);
+                JOptionPane.showMessageDialog(this, mensaje);
+                limpiarCampos();
+
+            } else {
+                JOptionPane.showMessageDialog(this, "Mascota no encontrada.");
+            }
+
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(this, "Edad debe ser un número válido.");
+        }
     }
 }

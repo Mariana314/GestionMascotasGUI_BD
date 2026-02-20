@@ -10,9 +10,9 @@ import com.mysql.cj.jdbc.exceptions.CommunicationsException;
 public class Conexion {
 	
 	private String nombreBd="gestion_mascotas";
-	private String usuario="root";
-	private String password="";
-	private String url="jdbc:mysql://localhost:3307/"+nombreBd+"?useUnicode=true&use"
+	private String usuario = "TU_USUARIO"; 
+	private String password = "TU_PASSWORD";
+	private String url="jdbc:mysql://localhost:3306/"+nombreBd+"?useUnicode=true&use"
 			+ "JDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&"
 			+ "serverTimezone=UTC";
 

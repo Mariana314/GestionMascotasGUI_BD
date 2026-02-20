@@ -33,6 +33,18 @@ public class Coordinador {
     public ArrayList<MascotaVO> listarMascotas() {
         return mascotaDAO.listarMascotas();
     }
+    
+    public String actualizarMascota(MascotaVO mascota) {
+        return mascotaDAO.actualizarMascota(mascota);
+    }
+
+    public String eliminarMascota(int id) {
+        return mascotaDAO.eliminarMascota(id);
+    }
+    
+    public MascotaVO buscarPorNombre(String nombre) {
+        return mascotaDAO.buscarPorNombre(nombre);
+    }
 
     public void mostrarVentanaConsulta() {
         ventanaConsulta.actualizarLista();
