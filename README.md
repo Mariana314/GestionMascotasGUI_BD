@@ -1,6 +1,6 @@
 # Gestión de Mascotas - Java GUI con Base de Datos
 
-## 📌 Descripción
+## Descripción
 
 Este proyecto es una aplicación desarrollada en Java que permite gestionar información de mascotas mediante una interfaz gráfica (GUI) conectada a una base de datos MySQL.
 
@@ -13,7 +13,7 @@ El sistema permite:
 
 ---
 
-## 🛠 Tecnologías utilizadas
+## Tecnologías utilizadas
 
 - Java SE
 - Swing (Interfaz gráfica)
@@ -23,7 +23,7 @@ El sistema permite:
 
 ---
 
-## ⚙️ Configuración de la Base de Datos
+##  Configuración de la Base de Datos
 
 1. Crear la base de datos en MySQL ejecutando el archivo `database.sql`.
 
